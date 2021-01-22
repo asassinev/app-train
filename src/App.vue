@@ -31,7 +31,11 @@
           @click="drawer = !drawer"
           class="d-none d-sm-flex d-md-none"
         ></v-app-bar-nav-icon>
-        <v-toolbar-title>Ad applicatioin</v-toolbar-title>
+        <v-toolbar-title>
+          <router-link to="/" tag="span" class="pointer">
+           Ad applicatioin
+          </router-link>
+        </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn
           class="d-sm-none d-md-flex"
@@ -74,3 +78,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+  .pointer {
+    cursor: pointer;
+  }
+</style>
