@@ -1,8 +1,8 @@
 <template>
     <v-container>
-        <v-layout row mt-2>
+        <v-layout>
             <v-flex xs12 md6 offset-sm3>
-              <h1 class="secondary--text text-center">Orders</h1>
+              <h1 class="secondary--text text-center mt-3">Orders</h1>
               <v-list
                 flat
                 two-line

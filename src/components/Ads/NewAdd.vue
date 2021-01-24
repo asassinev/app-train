@@ -2,7 +2,7 @@
   <v-container >
     <v-layout>
       <v-flex xs12 sm6 offset-sm3>
-        <h1 class="secondary--text text-center mt-5">Create new ad</h1>
+        <h1 class="secondary--text text-center mt-3">Create new ad</h1>
         <v-form v-model="valid" ref="form" lazy-validation>
           <v-text-field
             name="title"
