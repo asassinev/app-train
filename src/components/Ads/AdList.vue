@@ -8,7 +8,7 @@
           <v-layout>
             <v-flex xs4>
               <v-img
-                class="fill-height"
+                height="152px"
                 :src="ad.src">
               </v-img>
             </v-flex>
