@@ -21,15 +21,11 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <v-card
-    color="grey lighten-4"
-    flat
-    tile
-    >
-      <v-toolbar dense dark color="primary ">
+    <v-card>
+      <v-app-bar app dense dark color="primary ">
         <v-app-bar-nav-icon
           @click="drawer = !drawer"
-          class="d-none d-sm-flex d-md-none"
+          class="d-xs-flex d-md-none"
         ></v-app-bar-nav-icon>
         <v-toolbar-title>
           <router-link to="/" tag="span" class="pointer">
@@ -38,7 +34,7 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn
-          class="d-sm-none d-md-flex"
+          class="d-none d-md-flex"
           plain
           v-for="link in links"
           :key="link.title"
@@ -49,11 +45,11 @@
           </v-icon>
           {{ link.title }}
         </v-btn>
-      </v-toolbar>
-    </v-card>
-    <v-main>
-      <router-view></router-view>
-    </v-main>
+      </v-app-bar>
+      </v-card>
+      <v-main>
+        <router-view></router-view>
+      </v-main>
     <v-footer app></v-footer>
   </v-app>
 </template>
