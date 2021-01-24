@@ -1,5 +1,5 @@
 <template>
-  <v-container >
+  <v-container>
     <v-layout>
       <v-flex xs12 sm6 offset-sm3>
         <h1 class="secondary--text text-center mt-3">Create new ad</h1>

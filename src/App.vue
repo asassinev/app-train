@@ -21,7 +21,7 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <v-card>
+    <v-card class="rounded-0">
       <v-app-bar app dense dark color="primary ">
         <v-app-bar-nav-icon
           @click="drawer = !drawer"
