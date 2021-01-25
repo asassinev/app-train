@@ -78,9 +78,10 @@ export default {
         const ad = {
           title: this.title,
           description: this.description,
-          promo: this.promo
+          promo: this.promo,
+          src: 'http://komotoz.ru/photo/zhivotnye/images/chibis/chibis_13.jpg'
         }
-        console.log(ad)
+        this.$store.dispatch('createAd', ad)
       }
     }
   }
