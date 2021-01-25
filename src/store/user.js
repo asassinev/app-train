@@ -17,11 +17,31 @@ export default {
     }
   },
   actions: {
-    reqisterUser ({ commit }, payload) {
-      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-        .then(user => {
-          commit('setUser', new User(user.uid))
-        })
+    async reqisterUser ({ commit }, payload) {
+      commit('clearError')
+      commit('setLoading', true)
+      try {
+        const user = await firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+        commit('setUser', new User(user.uid))
+        commit('setLoading', false)
+      } catch (error) {
+        commit('setLoading', false)
+        commit('setError', error.message)
+        throw error
+      }
+    },
+    async loginUser ({ commit }, payload) {
+      commit('clearError')
+      commit('setLoading', true)
+      try {
+        const user = await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        commit('setUser', new User(user.uid))
+        commit('setLoading', false)
+      } catch (error) {
+        commit('setLoading', false)
+        commit('setError', error.message)
+        throw error
+      }
     }
   },
   getters: {

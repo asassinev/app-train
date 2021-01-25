@@ -40,6 +40,7 @@
                 <v-btn
                   color="primary"
                   @click="onSubmit"
+                  :loading="loading"
                 >login</v-btn>
               </v-card-actions>
             </v-card>
@@ -66,6 +67,9 @@ export default {
     }
   },
   computed: {
+    loading () {
+      return this.$store.getters.loading
+    },
     passwordErrors () {
       const errors = []
       if (!this.$v.password.$dirty) return errors
@@ -85,7 +89,15 @@ export default {
     onSubmit () {
       this.$v.$touch()
       if (!this.$v.$invalid) {
-        console.log({ email: this.email, password: this.password })
+        const user = {
+          email: this.email,
+          password: this.password
+        }
+        this.$store.dispatch('loginUser', user)
+          .then(() => {
+            this.$router.push('/')
+          })
+          .catch(err => console.log(err))
       }
     }
   }

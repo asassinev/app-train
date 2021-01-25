@@ -47,6 +47,7 @@
                 <v-btn
                   color="primary"
                   @click="onSubmit"
+                  :loading="loading"
                 >Create account</v-btn>
               </v-card-actions>
             </v-card>
@@ -75,6 +76,9 @@ export default {
     }
   },
   computed: {
+    loading () {
+      return this.$store.getters.loading
+    },
     passwordErrors () {
       const errors = []
       if (!this.$v.password.$dirty) return errors
@@ -106,6 +110,10 @@ export default {
           password: this.password
         }
         this.$store.dispatch('reqisterUser', user)
+          .then(() => {
+            this.$router.push('/')
+          })
+          .catch(err => console.log(err))
       }
     }
   }
