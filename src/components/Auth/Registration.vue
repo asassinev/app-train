@@ -101,7 +101,11 @@ export default {
     onSubmit () {
       this.$v.$touch()
       if (!this.$v.$invalid) {
-        console.log({ email: this.email, password: this.password })
+        const user = {
+          email: this.email,
+          password: this.password
+        }
+        this.$store.dispatch('reqisterUser', user)
       }
     }
   }
