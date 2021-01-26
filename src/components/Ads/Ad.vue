@@ -13,7 +13,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <editAdModel :ad="ad" v-if="isOwner"></editAdModel>
-                    <v-btn class="success">Buy</v-btn>
+                    <buy-modal :ad="ad"></buy-modal>
                   </v-card-actions>
                 </v-card>
                 <div v-else class="text-center">
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import BuyModal from '../Shared/BuyModal.vue'
 import editAdModel from './EditAdModal'
 
 export default {
@@ -47,7 +48,8 @@ export default {
     }
   },
   components: {
-    editAdModel
+    editAdModel,
+    BuyModal
   }
 }
 </script>

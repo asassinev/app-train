@@ -43,12 +43,7 @@
                       >
                         Open
                       </v-btn>
-                      <v-btn
-                        class="primary"
-                        raised
-                      >
-                        Buy
-                      </v-btn>
+                      <buy-modal :ad="ad"></buy-modal>
                     </v-card-actions>
                   </v-card>
               </v-flex>
@@ -73,7 +68,9 @@
 </template>
 
 <script>
+import BuyModal from './Shared/BuyModal.vue'
 export default {
+  components: { BuyModal },
   computed: {
     promoAds () {
       return this.$store.getters.promoAds

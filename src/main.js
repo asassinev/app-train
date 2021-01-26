@@ -6,8 +6,10 @@ import Vuelidate from 'vuelidate'
 import firebase from 'firebase/app'
 
 import App from './App.vue'
+import buyModalComponent from './components/Shared/BuyModal'
 
 Vue.use(Vuelidate)
+Vue.component('buyModal', buyModalComponent)
 
 Vue.config.productionTip = false
 
