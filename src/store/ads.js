@@ -1,3 +1,4 @@
+import { Object } from 'core-js'
 import firebase from 'firebase/app'
 import 'firebase/firebase-database'
 
@@ -21,43 +22,44 @@ class Ad {
 
 export default {
   state: {
-    ads: [
-      {
-        title: 'First ad',
-        description: 'Description',
-        promo: false,
-        id: '1',
-        src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
-      },
-      {
-        title: 'Second ad',
-        description: 'Description',
-        promo: true,
-        id: '2',
-        src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'
-      },
-      {
-        title: 'Third ad',
-        description: 'Description',
-        promo: true,
-        id: '3',
-        src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
-      },
-      {
-        title: 'Four ad',
-        description: 'Description',
-        promo: true,
-        id: '4',
-        src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
-      }
-    ]
+    ads: []
   },
   mutations: {
     createAd (state, payload) {
       state.ads.push(payload)
+    },
+    loadAds (state, payload) {
+      state.ads = payload
     }
   },
   actions: {
+    async fetchAds ({ commit }) {
+      commit('clearError')
+      commit('setLoading', true)
+      const resultAds = []
+
+      try {
+        const fbVal = await firebase.database().ref('ads').once('value')
+        const ads = fbVal.val()
+        Object.keys(ads).forEach(key => {
+          const ad = ads[key]
+          resultAds.push(new Ad(
+            ad.title,
+            ad.description,
+            ad.ownerId,
+            ad.src,
+            ad.promo,
+            key
+          ))
+        })
+        commit('loadAds', resultAds)
+        commit('setLoading', false)
+      } catch (error) {
+        commit('setError', error.message)
+        commit('setLoading', false)
+        throw error
+      }
+    },
     async createAd ({ commit, getters }, payload) {
       commit('clearError')
       commit('setLoading', true)
