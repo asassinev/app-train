@@ -40,7 +40,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn @click="onCancel" text>Cancel</v-btn>
-              <v-btn class="success" @click="onSave" flat>Save</v-btn>
+              <v-btn class="success" @click="onSave">Save</v-btn>
             </v-card-actions>
           </v-flex>
         </v-layout>

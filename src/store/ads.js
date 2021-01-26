@@ -31,6 +31,14 @@ export default {
     },
     loadAds (state, payload) {
       state.ads = payload
+    },
+    updateAd (state, { title, description, id }) {
+      const ad = state.ads.find(a => {
+        return a.id === id
+      })
+
+      ad.title = title
+      ad.description = description
     }
   },
   actions: {
@@ -93,6 +101,24 @@ export default {
         commit('setLoading', false)
         throw error
       }
+    },
+    async updateAd ({ commit }, { title, description, id }) {
+      commit('clearError')
+      commit('setLoading', true)
+
+      try {
+        await firebase.database().ref('ads').child(id).update({
+          title, description
+        })
+        commit('updateAd', {
+          title, description, id
+        })
+        commit('setLoading', false)
+      } catch (error) {
+        commit('setError', error.message)
+        commit('setLoading', false)
+        throw error
+      }
     }
   },
   getters: {
@@ -102,8 +128,8 @@ export default {
     promoAds (state) {
       return state.ads.filter(ad => ad.promo)
     },
-    myAds (state) {
-      return state.ads
+    myAds (state, getters) {
+      return state.ads.filter(ad => ad.ownerId === getters.user.id)
     },
     adById (state) {
       return adId => {

@@ -28,13 +28,13 @@ export default new VueRouter({
       path: '/list',
       name: 'list',
       component: Adlist,
-      beforeEnter: AuthGuard
+      beforeCreate: AuthGuard
     },
     {
       path: '/new',
       name: 'newAd',
       component: NewAd,
-      beforeEnter: AuthGuard
+      beforeCreate: AuthGuard
     },
     {
       path: '/login',
@@ -50,7 +50,7 @@ export default new VueRouter({
       path: '/orders',
       name: 'orders',
       component: Ordeds,
-      beforeEnter: AuthGuard
+      beforeCreate: AuthGuard
     }
   ],
   mode: 'history'
