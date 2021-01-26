@@ -50,6 +50,24 @@
       <v-main>
         <router-view></router-view>
       </v-main>
+      <v-snackbar
+        v-if="error"
+        :timeout="5000"
+        :multi-line="true"
+        color="error"
+        @input="closeError"
+        :value="true"
+      > {{ error }}
+        <template>
+          <v-btn
+            dark
+            text
+            @click="closeError"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
     <v-footer app></v-footer>
   </v-app>
 </template>
@@ -68,7 +86,18 @@ export default {
         { title: 'Orders', icon: 'mdi-bookmark-outline', url: '/orders' },
         { title: 'New ad', icon: 'mdi-note-plus', url: '/new' },
         { title: 'My ads', icon: 'mdi-format-list-bulleted', url: '/list' }
-      ]
+      ],
+      snackbar: true
+    }
+  },
+  computed: {
+    error () {
+      return this.$store.getters.error
+    }
+  },
+  methods: {
+    closeError () {
+      this.$store.dispatch('clearError')
     }
   }
 }
