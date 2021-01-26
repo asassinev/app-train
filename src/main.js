@@ -26,5 +26,11 @@ new Vue({
       appId: '1:1031949799924:web:bad6895a339c8835d229a1',
       measurementId: 'G-K9SV9VSX3'
     })
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.$store.dispatch('autoLoginUser', user)
+      }
+    })
   }
 }).$mount('#app')
