@@ -51,6 +51,7 @@
           <v-flex xs12>
             <v-spacer></v-spacer>
             <v-btn
+              :loading="loading"
               :disabled="!valid"
               class="success ml-3"
               @click="createAd">Create ad</v-btn>
@@ -72,6 +73,11 @@ export default {
       src: false
     }
   },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
   methods: {
     createAd () {
       if (this.$refs.form.validate()) {
@@ -82,6 +88,10 @@ export default {
           src: 'http://komotoz.ru/photo/zhivotnye/images/chibis/chibis_13.jpg'
         }
         this.$store.dispatch('createAd', ad)
+          .then(() => {
+            this.$router.push('/list')
+          })
+          .catch(() => {})
       }
     }
   }
