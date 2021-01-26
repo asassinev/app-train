@@ -1,6 +1,7 @@
 import { Object } from 'core-js'
 import firebase from 'firebase/app'
 import 'firebase/firebase-database'
+import 'firebase/firebase-storage'
 
 class Ad {
   constructor (
@@ -64,20 +65,28 @@ export default {
       commit('clearError')
       commit('setLoading', true)
 
+      const image = payload.image
+      console.log(image)
       try {
         const newAd = new Ad(
           payload.title,
           payload.description,
           getters.user.id,
-          payload.src,
+          '',
           payload.promo
         )
         const ad = await firebase.database().ref('ads').push(newAd)
-
+        const imageExt = image.name.slice(image.name.lastIndexOf('.'))
+        const fileData = await firebase.storage().ref(`ads/${ad.key}${imageExt}`).put(image)
+        const src = await firebase.storage().ref().child(fileData.ref.fullPath).getDownloadURL()
+        await firebase.database().ref('ads').child(ad.key).update({
+          src
+        })
         commit('setLoading', false)
         commit('createAd', {
           ...newAd,
-          id: ad.key
+          id: ad.key,
+          src
         })
       } catch (error) {
         commit('setError', error.message)

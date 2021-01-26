@@ -24,17 +24,25 @@
         <v-layout class="mb-5 mt-5">
           <v-flex>
             <v-btn
-              class="warning">
+              class="warning"
+              @click="triggerUpload">
               Upload
               <v-icon right dark>
                 mdi-cloud-upload
               </v-icon>
             </v-btn>
+            <input
+              ref="fileInput"
+              type="file"
+              style="display: none"
+              accept="image/*"
+              @change="onFileChange"
+            >
           </v-flex>
         </v-layout>
         <v-layout>
-          <v-flex v-show="src">
-            <img src="" height="100">
+          <v-flex v-show="image">
+            <img :src="src" height="100">
           </v-flex>
         </v-layout>
         <v-layout
@@ -52,7 +60,7 @@
             <v-spacer></v-spacer>
             <v-btn
               :loading="loading"
-              :disabled="!valid"
+              :disabled="!valid || !image"
               class="success ml-3"
               @click="createAd">Create ad</v-btn>
           </v-flex>
@@ -70,7 +78,8 @@ export default {
       description: '',
       promo: false,
       valid: false,
-      src: false
+      image: null,
+      src: ''
     }
   },
   computed: {
@@ -80,12 +89,12 @@ export default {
   },
   methods: {
     createAd () {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && this.image) {
         const ad = {
           title: this.title,
           description: this.description,
           promo: this.promo,
-          src: 'http://komotoz.ru/photo/zhivotnye/images/chibis/chibis_13.jpg'
+          image: this.image
         }
         this.$store.dispatch('createAd', ad)
           .then(() => {
@@ -93,6 +102,19 @@ export default {
           })
           .catch(() => {})
       }
+    },
+    triggerUpload () {
+      this.$refs.fileInput.click()
+    },
+    onFileChange (event) {
+      const file = event.target.files[0]
+
+      const reader = new FileReader()
+      reader.onload = e => {
+        this.src = reader.result
+      }
+      reader.readAsDataURL(file)
+      this.image = file
     }
   }
 }
