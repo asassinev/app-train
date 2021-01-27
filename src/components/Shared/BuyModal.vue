@@ -85,15 +85,14 @@ export default {
         this.$store.dispatch('createOrder', {
           name: this.name,
           phone: this.phone,
-          adId: this.ad.id
-          // ownerId: this.ad.ownerId
+          adId: this.ad.id,
+          ownerId: this.ad.ownerId
+        }).finally(() => {
+          this.name = ''
+          this.phone = ''
+          this.localLoading = false
+          this.dialog = false
         })
-          .finally(() => {
-            this.name = ''
-            this.phone = ''
-            this.localLoading = false
-            this.dialog = false
-          })
       }
     }
   }
